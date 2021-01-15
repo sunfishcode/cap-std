@@ -17,7 +17,8 @@ publish = false
 rustc_version = "0.4.0"
 
 [dev-dependencies]
-async-std = { version = "1.9.0", features = ["attributes"] }
+# Use a git dependency until https://github.com/async-rs/async-std/pull/937 is released.
+async-std = { git = "https://github.com/async-rs/async-std", features = ["attributes"] }
 anyhow = "1.0.37"
 cap-async-std = { path = "cap-async-std", version = "^0.16.1-alpha.0"}
 cap-fs-ext = { path = "cap-fs-ext", version = "^0.16.1-alpha.0"}
@@ -46,6 +47,10 @@ async_std_fs_utf8 = [
     "cap-async-std/fs_utf8",
     "cap-fs-ext/async_std_fs_utf8"
 ]
+
+# Patch in a git dependency; see the dependency on async-std above.
+[patch.crates-io]
+async-std = { git = "https://github.com/async-rs/async-std", features = ["attributes", "unstable"] }
 
 [badges]
 maintenance = { status = "actively-developed" }
