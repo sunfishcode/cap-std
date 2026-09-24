@@ -403,6 +403,11 @@ jobs:
     - name: Use specific dependency versions for Rust 1.70 compatibility.
       run: |
         cargo update --package=once_cell --precise=1.20.3
+        # tempfile 3.27 pulled edition-2024 getrandom, which Cargo 1.70 can't parse.
+        cargo update --package=tempfile --precise=3.23.0
+        # js-sys 0.3.72 has no `std` feature, and later versions require a
+        # wasm-bindgen newer than the Rust 1.70 resolver would otherwise pick.
+        cargo update --package=js-sys --precise=0.3.80
         cargo update --package=uuid --precise=1.20.0
 
     # Don't use --all-features because some of the features have dependencies
@@ -421,7 +426,7 @@ jobs:
     - uses: ./.github/actions/install-rust
       with:
         toolchain: nightly
-    - run: cargo install cargo-fuzz --vers "^0.11"
+    - run: cargo install cargo-fuzz --version 0.13.2 --locked
     - run: cargo fetch
       working-directory: ./fuzz
     - run: cargo fuzz build --dev
