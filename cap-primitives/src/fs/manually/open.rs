@@ -8,7 +8,6 @@ use crate::fs::{
 };
 #[cfg(any(target_os = "android", target_os = "linux", target_os = "freebsd"))]
 use rustix::fs::OFlags;
-use std::borrow::Cow;
 use std::ffi::OsStr;
 use std::path::{Component, Path, PathBuf};
 use std::{fs, io, mem};

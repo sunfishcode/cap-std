@@ -145,11 +145,11 @@ impl ImplMetadataExt {
             created: None,
 
             ext: Self {
-                // The type of `st_dev` is `dev_t` which is signed on some
-                // platforms and unsigned on other platforms. A `u64` is enough
-                // to work for all unsigned platforms, and for signed platforms
-                // perform a sign extension to `i64` and then view that as an
-                // unsigned 64-bit number instead.
+                // The type of `st_dev` and `st_rdev` is `dev_t` which is
+                // signed on some platforms and unsigned on other platforms. A
+                // `u64` is enough to work for all unsigned platforms, and for
+                // signed platforms perform a sign extension to `i64` and then
+                // view that as an unsigned 64-bit number instead.
                 //
                 // Note that the `unused_comparisons` is ignored here for
                 // platforms where it's unsigned since the first branch here
@@ -168,7 +168,11 @@ impl ImplMetadataExt {
                 #[cfg(not(target_os = "wasi"))]
                 gid: stat.st_gid,
                 #[cfg(not(target_os = "wasi"))]
-                rdev: u64::try_from(stat.st_rdev).unwrap(),
+                rdev: if stat.st_rdev < 0 {
+                    i64::try_from(stat.st_rdev).unwrap() as u64
+                } else {
+                    u64::try_from(stat.st_rdev).unwrap()
+                },
                 #[cfg(not(target_os = "wasi"))]
                 size: u64::try_from(stat.st_size).unwrap(),
                 #[cfg(not(target_os = "wasi"))]
