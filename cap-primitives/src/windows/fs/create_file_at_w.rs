@@ -70,9 +70,12 @@ const FILE_ATTRIBUTE_VALID_FLAGS: FILE_FLAGS_AND_ATTRIBUTES = FILE_ATTRIBUTE_EA
 /// Like Windows' `CreateFileW`, but takes a `dir` argument to use as the
 /// root directory.
 ///
-/// Also, the `lpfilename` is a Rust slice instead of a C-style NUL-terminated
-/// array, because that's what our callers have and it's closer to what
-/// `NtCreatePath` takes.
+/// Also, the `lpfilename` is a Rust slice ending in a NUL terminator. The
+/// terminator is not part of the name passed to `NtCreateFile`, but it is
+/// kept in memory right after it, as `RtlInitUnicodeString` does: filter
+/// drivers and user-mode hooks that read `ObjectName->Buffer` up to a NUL
+/// instead of `Length` bytes would otherwise read past the end of the
+/// allocation.
 #[allow(non_snake_case)]
 pub unsafe fn CreateFileAtW(
     dir: HANDLE,
@@ -118,9 +121,14 @@ pub unsafe fn CreateFileAtW(
         }
     };
 
-    // Convert `lpfilename` to a `UNICODE_STRING`.
+    // Convert `lpfilename` to a `UNICODE_STRING`, keeping the NUL terminator
+    // out of `Length` but inside `MaximumLength`.
+    let Some((&0, name)) = lpfilename.split_last() else {
+        SetLastError(ERROR_INVALID_PARAMETER);
+        return HandleOrInvalid::from_raw_handle(INVALID_HANDLE_VALUE as _);
+    };
     let byte_length = lpfilename.len() * mem::size_of::<u16>();
-    let length: u16 = match byte_length.try_into() {
+    let maximum_length: u16 = match byte_length.try_into() {
         Ok(length) => length,
         Err(_) => {
             SetLastError(ERROR_INVALID_NAME);
@@ -128,9 +136,9 @@ pub unsafe fn CreateFileAtW(
         }
     };
     let mut unicode_string = UNICODE_STRING {
-        Buffer: lpfilename.as_ptr() as *mut u16,
-        Length: length,
-        MaximumLength: length,
+        Buffer: name.as_ptr() as *mut u16,
+        Length: maximum_length - mem::size_of::<u16>() as u16,
+        MaximumLength: maximum_length,
     };
 
     let mut handle = INVALID_HANDLE_VALUE;
