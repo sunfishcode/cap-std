@@ -519,13 +519,22 @@ fn file_test_directoryinfo_readdir() {
 }
 
 #[test]
-fn file_create_new_already_exists_error() {
+fn file_create_new_via_openoptions_already_exists_error() {
     let tmpdir = tmpdir();
     let file = "file_create_new_error_exists";
     check!(tmpdir.create(file));
     let e = tmpdir
         .open_with(file, &fs::OpenOptions::new().write(true).create_new(true))
         .unwrap_err();
+    assert_eq!(e.kind(), ErrorKind::AlreadyExists);
+}
+
+#[test]
+fn file_create_new_already_exists_error() {
+    let tmpdir = tmpdir();
+    let file = "file_create_new_error_exists";
+    check!(tmpdir.create(file));
+    let e = tmpdir.create_new(file).unwrap_err();
     assert_eq!(e.kind(), ErrorKind::AlreadyExists);
 }
 

@@ -202,6 +202,18 @@ impl Dir {
         )
     }
 
+    /// Creates a new file in read-write mode; error if the file already exists.
+    ///
+    /// This corresponds to [`std::fs::File::create_new`], but only accesses paths relative to
+    /// `self`.
+    #[inline]
+    pub fn create_new<P: AsRef<Path>>(&self, path: P) -> io::Result<File> {
+        self.open_with(
+            path,
+            OpenOptions::new().read(true).write(true).create_new(true),
+        )
+    }
+
     /// Returns the canonical form of a path with all intermediate components
     /// normalized and symbolic links resolved.
     ///
