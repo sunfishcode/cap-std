@@ -5,11 +5,8 @@
     <strong>Capability-based version of the Rust standard library</strong>
   </p>
 
-  <strong>A <a href="https://bytecodealliance.org/">Bytecode Alliance</a> project</strong>
-
   <p>
-    <a href="https://github.com/bytecodealliance/cap-std/actions?query=workflow%3ACI"><img src="https://github.com/bytecodealliance/cap-std/workflows/CI/badge.svg" alt="Github Actions CI Status" /></a>
-    <a href="https://bytecodealliance.zulipchat.com/#narrow/stream/217126-wasmtime"><img src="https://img.shields.io/badge/zulip-join_chat-brightgreen.svg" alt="zulip chat" /></a>
+    <a href="https://github.com/sunfishcode/cap-std/actions?query=workflow%3ACI"><img src="https://github.com/sunfishcode/cap-std/workflows/CI/badge.svg" alt="Github Actions CI Status" /></a>
   </p>
 </div>
 
@@ -43,13 +40,13 @@ Linux.
 
 [CWE-22]: https://cwe.mitre.org/data/definitions/22.html
 [2021 CWE Top 25 Most Dangerous Software Weaknesses]: https://cwe.mitre.org/top25/archive/2021/2021_cwe_top25.html
-[`cap-std`]: https://github.com/bytecodealliance/cap-std/blob/main/cap-std/README.md
-[`cap-directories`]: https://github.com/bytecodealliance/cap-std/blob/main/cap-directories/README.md
-[`cap-tempfile`]: https://github.com/bytecodealliance/cap-std/blob/main/cap-tempfile/README.md
-[`cap-fs-ext`]: https://github.com/bytecodealliance/cap-std/blob/main/cap-fs-ext/README.md
-[`cap-time-ext`]: https://github.com/bytecodealliance/cap-std/blob/main/cap-time-ext/README.md
-[`cap-rand`]: https://github.com/bytecodealliance/cap-std/blob/main/cap-rand/README.md
-[`cap-net-ext`]: https://github.com/bytecodealliance/cap-std/blob/main/cap-net-ext/README.md
+[`cap-std`]: https://github.com/sunfishcode/cap-std/blob/main/cap-std/README.md
+[`cap-directories`]: https://github.com/sunfishcode/cap-std/blob/main/cap-directories/README.md
+[`cap-tempfile`]: https://github.com/sunfishcode/cap-std/blob/main/cap-tempfile/README.md
+[`cap-fs-ext`]: https://github.com/sunfishcode/cap-std/blob/main/cap-fs-ext/README.md
+[`cap-time-ext`]: https://github.com/sunfishcode/cap-std/blob/main/cap-time-ext/README.md
+[`cap-rand`]: https://github.com/sunfishcode/cap-std/blob/main/cap-rand/README.md
+[`cap-net-ext`]: https://github.com/sunfishcode/cap-std/blob/main/cap-net-ext/README.md
 [`cap_std::fs`]: https://docs.rs/cap-std/latest/cap_std/fs/index.html
 [standard application directories]: https://docs.rs/directories/
 [temporary directories]: https://docs.rs/tempfile/
@@ -136,7 +133,7 @@ There are several examples of cap-std in use:
 [this port of tide]: https://github.com/sunfishcode/tide/
 [The diff]: https://github.com/sunfishcode/tide/commit/9b4c5449c6b3d1f0c78d8f6f44669905be5a7c78
 [`Dir::open_ambient_dir`]: https://docs.rs/cap-std/latest/cap_std/fs/struct.Dir.html#method.open_ambient_dir
-[`kv-cli` example]: https://github.com/bytecodealliance/cap-std/blob/main/examples/kv-cli.rs
+[`kv-cli` example]: https://github.com/sunfishcode/cap-std/blob/main/examples/kv-cli.rs
 [`WASI`]: https://github.com/WebAssembly/WASI/
 [`Wasmtime`]: https://wasmtime.dev/
 
