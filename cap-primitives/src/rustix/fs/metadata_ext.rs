@@ -351,7 +351,7 @@ impl crate::fs::MetadataExt for ImplMetadataExt {
 }
 
 /// It should be possible to represent times before the Epoch.
-/// https://github.com/bytecodealliance/cap-std/issues/328
+/// https://github.com/sunfishcode/cap-std/issues/328
 #[test]
 fn negative_time() {
     let system_time = system_time_from_rustix(-1, 1).unwrap();
