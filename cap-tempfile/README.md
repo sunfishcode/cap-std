@@ -6,7 +6,7 @@
   </p>
 
   <p>
-    <a href="https://github.com/bytecodealliance/cap-std/actions?query=workflow%3ACI"><img src="https://github.com/bytecodealliance/cap-std/workflows/CI/badge.svg" alt="Github Actions CI Status" /></a>
+    <a href="https://github.com/sunfishcode/cap-std/actions?query=workflow%3ACI"><img src="https://github.com/sunfishcode/cap-std/workflows/CI/badge.svg" alt="Github Actions CI Status" /></a>
     <a href="https://crates.io/crates/cap-tempfile"><img src="https://img.shields.io/crates/v/cap-tempfile.svg" alt="crates.io page" /></a>
     <a href="https://docs.rs/cap-tempfile"><img src="https://docs.rs/cap-tempfile/badge.svg" alt="docs.rs docs" /></a>
   </p>
