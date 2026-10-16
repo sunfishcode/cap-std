@@ -1427,26 +1427,11 @@ fn trailing_slash_symlink() {
 
     for path in ["hidden", "hidden/", "indirect", "indirect/"] {
         let err = sandbox.open_dir(path).unwrap_err();
-        assert!(
-            err.to_string()
-                .contains("a path led outside of the filesystem"),
-            "{:?}",
-            err
-        );
+        assert_eq!(err.kind(), io::ErrorKind::InvalidFilename, "{:?}", err);
         let err = sandbox.read_dir(path).unwrap_err();
-        assert!(
-            err.to_string()
-                .contains("a path led outside of the filesystem"),
-            "{:?}",
-            err
-        );
+        assert_eq!(err.kind(), io::ErrorKind::InvalidFilename, "{:?}", err);
         let err = sandbox.canonicalize(path).unwrap_err();
-        assert!(
-            err.to_string()
-                .contains("a path led outside of the filesystem"),
-            "{:?}",
-            err
-        );
+        assert_eq!(err.kind(), io::ErrorKind::InvalidFilename, "{:?}", err);
     }
 }
 
