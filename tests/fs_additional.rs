@@ -1426,17 +1426,26 @@ fn trailing_slash_symlink() {
     let sandbox = check!(tmpdir.open_dir("sandbox"));
 
     for path in ["hidden", "hidden/", "indirect", "indirect/"] {
-        error!(
-            sandbox.open_dir(path),
-            "a path led outside of the filesystem"
+        let err = sandbox.open_dir(path).unwrap_err();
+        assert!(
+            err.to_string()
+                .contains("a path led outside of the filesystem"),
+            "{:?}",
+            err
         );
-        error!(
-            sandbox.read_dir(path),
-            "a path led outside of the filesystem"
+        let err = sandbox.read_dir(path).unwrap_err();
+        assert!(
+            err.to_string()
+                .contains("a path led outside of the filesystem"),
+            "{:?}",
+            err
         );
-        error!(
-            sandbox.canonicalize(path),
-            "a path led outside of the filesystem"
+        let err = sandbox.canonicalize(path).unwrap_err();
+        assert!(
+            err.to_string()
+                .contains("a path led outside of the filesystem"),
+            "{:?}",
+            err
         );
     }
 }
@@ -1495,17 +1504,26 @@ fn trailing_slash_symlink_more() {
         "root_link",
         "root_link/",
     ] {
-        error!(
-            sandbox.open_dir(path),
-            "a path led outside of the filesystem"
+        let err = sandbox.open_dir(path).unwrap_err();
+        assert!(
+            err.to_string()
+                .contains("a path led outside of the filesystem"),
+            "{:?}",
+            err
         );
-        error!(
-            sandbox.read_dir(path),
-            "a path led outside of the filesystem"
+        let err = sandbox.read_dir(path).unwrap_err();
+        assert!(
+            err.to_string()
+                .contains("a path led outside of the filesystem"),
+            "{:?}",
+            err
         );
-        error!(
-            sandbox.canonicalize(path),
-            "a path led outside of the filesystem"
+        let err = sandbox.canonicalize(path).unwrap_err();
+        assert!(
+            err.to_string()
+                .contains("a path led outside of the filesystem"),
+            "{:?}",
+            err
         );
     }
 }
