@@ -423,7 +423,7 @@ jobs:
     - uses: ./.github/actions/install-rust
       with:
         toolchain: nightly
-    - run: cargo install cargo-fuzz --vers "^0.11"
+    - run: cargo install cargo-fuzz --vers "^0.13"
     - run: cargo fetch
       working-directory: ./fuzz
     - run: cargo fuzz build --dev
