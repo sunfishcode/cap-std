@@ -403,6 +403,7 @@ jobs:
     - name: Use specific dependency versions for Rust 1.70 compatibility.
       run: |
         cargo update --package=once_cell --precise=1.20.3
+        cargo update --package=js-sys --precise=0.3.85
         cargo update --package=uuid --precise=1.20.0
 
     # Don't use --all-features because some of the features have dependencies
