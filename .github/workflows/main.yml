@@ -405,6 +405,7 @@ jobs:
         cargo update --package=once_cell --precise=1.20.3
         cargo update --package=js-sys --precise=0.3.85
         cargo update --package=uuid --precise=1.20.0
+        cargo update --package=tempfile --precise=3.25.0
 
     # Don't use --all-features because some of the features have dependencies
     # that don't work on newer Rust versions.
