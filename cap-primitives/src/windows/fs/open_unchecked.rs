@@ -88,16 +88,16 @@ fn open_at(start: &fs::File, path: &Path, opts: &OpenOptions) -> io::Result<fs::
         }
     }
 
-    let mut wide = OsStr::encode_wide(rebuilt.as_os_str()).collect::<Vec<u16>>();
+    // Both `CreateFileW` and our own `CreateFileAtW` take a NUL-terminated
+    // filename.
+    let wide = OsStr::encode_wide(rebuilt.as_os_str())
+        .chain(Some(0))
+        .collect::<Vec<u16>>();
 
     // If we ended up re-rooting, use Windows' `CreateFileW` instead of our
     // own `CreateFileAtW` so that it does the requisite magic for absolute
     // paths.
     if dir == 0 as HANDLE {
-        // We're calling the windows-sys `CreateFileW` which expects a
-        // NUL-terminated filename, so add a NUL terminator.
-        wide.push(0);
-
         let handle = unsafe {
             CreateFileW(
                 wide.as_ptr(),
@@ -115,9 +115,6 @@ fn open_at(start: &fs::File, path: &Path, opts: &OpenOptions) -> io::Result<fs::
             Err(io::Error::last_os_error())
         }
     } else {
-        // Our own `CreateFileAtW` is similar to `CreateFileW` except it
-        // takes the filename as a Rust slice directly, so we can skip
-        // the NUL terminator.
         let handle = unsafe {
             CreateFileAtW(
                 dir,
