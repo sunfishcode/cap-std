@@ -143,6 +143,16 @@ impl Dir {
         self.cap_std.create(path).map(File::from_cap_std)
     }
 
+    /// Creates a new file in read-write mode; error if the file already exists.
+    ///
+    /// This corresponds to [`std::fs::File::create_new`], but only accesses paths relative to
+    /// `self`.
+    #[inline]
+    pub fn create_new<P: AsRef<Utf8Path>>(&self, path: P) -> io::Result<File> {
+        let path = from_utf8(path.as_ref())?;
+        self.cap_std.create_new(path).map(File::from_cap_std)
+    }
+
     /// Returns the canonical form of a path with all intermediate components
     /// normalized and symbolic links resolved.
     ///
